@@ -17,7 +17,6 @@ Handlers required by the web operations
 
 import os
 
-from plugins.yadapasswordsignin.handlers import redirect_to_signin
 from yadacoin.http.base import BaseHandler
 
 SCROLLER_DIR = os.path.normpath(
@@ -62,6 +61,8 @@ class AppHandler(BaseHandler):
         Wallet. Operator sign-in is the shared Yada Password page.
         """
         if self.get_query_argument("operator_signin", "") == "1":
+            from plugins.yadapasswordsignin.handlers import redirect_to_signin
+
             return redirect_to_signin(
                 self,
                 "wallet",
@@ -95,7 +96,7 @@ class ScrollerAssetHandler(BaseHandler):
 WEB_HANDLERS = [
     (r"/", HomeHandler),
     (r"/node-dashboard", HomeHandler),
-    (r"/app", AppHandler),
+    (r"/app/?", AppHandler),
     (
         r"/file-announcements/demo/yadascroller/(styles\.css|app\.js)",
         ScrollerAssetHandler,
