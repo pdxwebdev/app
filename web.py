@@ -32,7 +32,14 @@ SCROLLER_DIR = os.path.normpath(
 )
 
 
+def _app_templates():
+    return os.path.join(os.path.dirname(__file__), "templates")
+
+
 class HomeHandler(BaseHandler):
+    def get_template_path(self):
+        return _app_templates()
+
     async def get(self):
         """
         Serve the feed at /, or the node dashboard at /node-dashboard.
@@ -56,6 +63,9 @@ class HomeHandler(BaseHandler):
 
 
 class AppHandler(BaseHandler):
+    def get_template_path(self):
+        return _app_templates()
+
     async def get(self):
         """
         Wallet. Operator sign-in is the shared Yada Password page.
